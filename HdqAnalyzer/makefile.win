@@ -1,0 +1,20 @@
+# Windows makefile for HDQ Analyzer
+TARGET = HdqAnalyzer.dll
+LIBDIR = ../lib/Win64
+INCDIR = ../inc
+
+CXX = g++
+HEADERS = src/HdqAnalyzer.h src/HdqAnalyzerSettings.h src/HdqAnalyzerResults.h src/HdqSimulationDataGenerator.h
+SOURCES = src/HdqAnalyzer.cpp src/HdqAnalyzerSettings.cpp src/HdqAnalyzerResults.cpp src/HdqSimulationDataGenerator.cpp
+INCLUDES = -I$(INCDIR)
+CXXFLAGS = -Wall -O2 -shared -fPIC -DWIN32
+# 使用 import library 而不是直接链接 DLL
+LDFLAGS = -L$(LIBDIR) -lAnalyzer
+
+$(TARGET): $(SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(SOURCES) $(LDFLAGS) -o $(TARGET)
+
+clean:
+	del $(TARGET)
+
+.PHONY: clean
